@@ -6,7 +6,11 @@ for Joyent's URL signature scheme, as used by Manta.
 The library provides a URLSignature class containing the signature
 functionality. The following methods are provided:
 
-## `URLSignature::sign($url, $keyId, $key, array $options = [])`
+## `URLSignature::sign()`
+
+~~~{.php}
+$result = URLSignature::sign($url, $keyId, $key, array $options = [])
+~~~
 
 `sign()` signs a URL for a future request.
 
