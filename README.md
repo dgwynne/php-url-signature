@@ -32,7 +32,8 @@ specified, `'GET'` is used.
 
 The expiry for the signature may be specified as either an offset
 from the current systems time using `$options['offset']`, or as an
-abolute UNIX epoch time using `$options['expires']`.
+abolute UNIX epoch time using `$options['expires']`. The default
+value for the expiry is one hour in the future.
 
 ### Return Value
 
