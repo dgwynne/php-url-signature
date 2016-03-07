@@ -79,8 +79,8 @@ class URLSignature {
 		list($type, $hash) = $parts;
 
 		$get = [];
-		if (isset($parts['query'])) {
-			parse_str($parts['query'], $get);
+		if (isset($url['query'])) {
+			parse_str($url['query'], $get);
 		}
 
 		$get['algorithm'] = $algorithm;
