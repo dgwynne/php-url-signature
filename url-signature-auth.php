@@ -32,6 +32,16 @@ class URLSignature {
 		return self::result(0, $url);
 	}
 
+	static protected function rsa_sign($data, &$signature, $key,
+	    $algorithm = OPENSSL_ALGO_SHA1) {
+		$k = openssl_pkey_get_private($key);
+		if ($key === false) {
+			return (false);
+		}
+
+		return openssl_sign($data, $signature, $k, $algorithm);
+	}
+
 	static public function sign($url, $keyId, $key, array $options = []) {
 		if (is_string($url)) {
 			$url = parse_url($url);
@@ -58,6 +68,9 @@ class URLSignature {
 
 		$algorithm = isset($options['algorithm']) ?
 		    $options['algorithm'] : 'rsa-sha512';
+
+		$rsa_sign = isset($options['rsa_sign']) ?
+		    $options['rsa_sign'] : [ get_class($this), 'rsa_sign' ];
 
 		$parts = explode('-', strtolower($algorithm));
 		if (sizeof($parts) != 2) {
@@ -86,16 +99,9 @@ class URLSignature {
 
 		switch ($type) {
 		case 'rsa':
-			$k = openssl_pkey_get_private($key);
-			if ($key === false) {
-				return self::err("key error: " .
-				    openssl_error_string());
-			}
-
-			if (openssl_sign($data, $signature,
-			    $k, $hash) === false) {
-				return self::err("unable to sign request: " .
-				    openssl_error_string());
+			if ($rsa_sign($data, $signature,
+			    $key, $hash) === false) {
+				return self::err("unable to sign request");
 			}
 			break;
 
