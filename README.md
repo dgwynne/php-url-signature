@@ -41,7 +41,7 @@ value for the expiry is one hour in the future.
 the following methods:
 
 `$result->error()` returns a non-zero value if the signature
-operationg did not complete successfully.
+operation did not complete successfully.
 
 If the result is an error, `$result->errmsg()` will return a string
 describing the failure.
