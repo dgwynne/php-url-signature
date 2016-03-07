@@ -1,9 +1,51 @@
 # php-url-signature
 
 The URL Signature Authentication library for PHP implements a client
-for Joyent's URL signature scheme as used by Manta.
+for Joyent's URL signature scheme, as used by Manta.
 
-## Usage
+The library provides a URLSignature class containing the signature
+functionality. The following methods are provided:
+
+## `URLSignature::sign($url, $keyId, $key, array $options = [])`
+
+`sign()` signs a URL for a future request.
+
+The URL to be signed is specified via the `$url` argument. It may
+be passed as a array like what is returned by `parse_url()`, or as
+a string.
+
+The key to be used for signing the URL is passed as `$key`, and
+identified by the `$keyId` parameter.
+
+Optional parameters may be passed via the `$options` array. The
+following options may be passed:
+
+The algorithm may be specified via `$options['algorithm']`. Unless
+specified, `'rsa-sha512'` is used.
+
+The HTTP method may be specified via `$options['method']`. Unless
+specified, `'GET'` is used.
+
+The expiry for the signature may be specified as either an offset
+from the current systems time using `$options['offset']`, or as an
+abolute UNIX epoch time using `$options['expires']`.
+
+### Return Value
+
+`sign()` returns a URLSignatureResult object. This object provides
+the following methods:
+
+`$result->error()` returns a non-zero value if the signature
+operationg did not complete successfully.
+
+If the result is an error, `$result->errmsg()` will return a string
+describing the failure.
+
+On success, `$result->value()` will return an array structured like
+the result of `parse_url()`. This result may be used to build a URL
+that can be fetched.
+
+## Examples
 
 ### Client
 
