@@ -35,7 +35,7 @@ class URLSignature {
 	static protected function rsa_sign($data, &$signature, $key,
 	    $algorithm = OPENSSL_ALGO_SHA1) {
 		$k = openssl_pkey_get_private($key);
-		if ($key === false) {
+		if ($k === false) {
 			return (false);
 		}
 
