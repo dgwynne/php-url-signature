@@ -70,7 +70,7 @@ class URLSignature {
 		    $options['algorithm'] : 'rsa-sha512';
 
 		$rsa_sign = isset($options['rsa_sign']) ?
-		    $options['rsa_sign'] : [ get_class($this), 'rsa_sign' ];
+		    $options['rsa_sign'] : [ static::class, 'rsa_sign' ];
 
 		$parts = explode('-', strtolower($algorithm));
 		if (sizeof($parts) != 2) {
