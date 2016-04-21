@@ -37,7 +37,7 @@ value for the expiry is one hour in the future.
 
 An alternative implementation of an RSA sign function may be provided
 via `$options['rsa_sign']`. The specified function should implement
-the same API as (`openssl_sign()`)[http://php.net/openssl_sign].
+the same API as [`openssl_sign()`](http://php.net/openssl_sign).
 Unless specified, `openssl_sign()` is used.
 
 ### Return Value
