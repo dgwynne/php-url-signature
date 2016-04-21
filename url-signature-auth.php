@@ -32,16 +32,6 @@ class URLSignature {
 		return self::result(0, $url);
 	}
 
-	static protected function rsa_sign($data, &$signature, $key,
-	    $algorithm = OPENSSL_ALGO_SHA1) {
-		$k = openssl_pkey_get_private($key);
-		if ($k === false) {
-			return (false);
-		}
-
-		return openssl_sign($data, $signature, $k, $algorithm);
-	}
-
 	static public function sign($url, $keyId, $key, array $options = []) {
 		if (is_string($url)) {
 			$url = parse_url($url);
@@ -70,7 +60,7 @@ class URLSignature {
 		    $options['algorithm'] : 'rsa-sha512';
 
 		$rsa_sign = isset($options['rsa_sign']) ?
-		    $options['rsa_sign'] : [ static::class, 'rsa_sign' ];
+		    $options['rsa_sign'] : 'openssl_sign';
 
 		$parts = explode('-', strtolower($algorithm));
 		if (sizeof($parts) != 2) {
